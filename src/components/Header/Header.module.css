@@ -1,0 +1,15 @@
+.logo{
+    margin-left: 10px;
+    width: 150px;
+}
+.header{
+    grid-area: h;
+    background: #C18FE9;
+    border-radius: 11px;
+}
+.loginBlock{
+    float: right;
+}
+.loginBlock{
+    color: white;
+}

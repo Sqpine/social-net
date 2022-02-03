@@ -1,0 +1,8 @@
+.loginForm{
+    width: 30%;
+    margin: 0 auto;
+    background-color: blueviolet;
+    border: 2px solid;
+    padding: 10px;
+    border-radius: 10px;
+}

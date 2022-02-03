@@ -1,0 +1,21 @@
+.usersPhoto{
+    width: 100px;
+    height: 100px;
+}
+.active{
+    font-weight: bold;
+}
+.center{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+
+}
+.users{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+.usersPage{
+    padding: 30px;
+}
