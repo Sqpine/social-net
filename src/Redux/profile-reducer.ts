@@ -108,7 +108,6 @@ export const setPhotoSuccsesful = (photo: object) => {
 export const profileThunk = (id: string | undefined | null, ownId: string | null): ThunkAction<Promise<void>, StoreType, any, ActionTypes> => {
     return async (dispatch) => {
         const userIdToUse = id ? id : ownId
-        debugger
         let response = await profileAPI.contentProfile(userIdToUse)
         dispatch(setUserProfile(response.data))
 
