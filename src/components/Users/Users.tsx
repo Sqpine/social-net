@@ -26,9 +26,11 @@ const Users = (props: PropsType) => {
     return (
         <div className={s.users}>
             <div className={s.usersPage}>
-                <Pagination onChange={(e, value) => {
-                    props.onPageChanged(value)
-                }} page={props.currentPage} count={pagesNumbers.length}/>
+                <div>
+                    <Pagination size='large' onChange={(e, value) => {
+                        props.onPageChanged(value)
+                    }} page={props.currentPage} count={pagesNumbers.length}/>
+                </div>
             </div>
             {props.isFetching ? <div className={s.loader}>
                 <CircularProgress/>

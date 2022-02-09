@@ -9,6 +9,7 @@ import ProfileForm from "../profileForm";
 import IconButton from '@material-ui/core/IconButton';
 import {Button} from '@material-ui/core';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import avatar from '../../../images/avatar.png'
 
 export type ContactType = {
     github: string
@@ -94,7 +95,7 @@ const ProfileInfo = (props: PropsType) => {
     return (
         <div className={classes.page}>
             <div className={classes.descriptionBlock}>
-                <img src={props.profile.photos.large} alt=""/>
+                <img src={props.profile.photos.large || avatar} alt=""/>
             </div>
             {props.isOwner ? null :
                 <div className={classes.descriptionBlock}>
@@ -112,7 +113,7 @@ const ProfileInfo = (props: PropsType) => {
                     />
                 </div>
             }
-            <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+            <ProfileStatus isOwner={props.isOwner} status={props.status} updateStatus={props.updateStatus}/>
             <ProfileDataInfo profile={props.profile}/>
             {props.isOwner ? null : editMode
                 ? <div className={classes.button}>

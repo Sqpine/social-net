@@ -6,16 +6,21 @@ import IconButton from "@material-ui/core/IconButton";
 type PropsType = {
     updateStatus: (s: string) => void
     status: string
+    isOwner: string | undefined
 }
 const ProfileStatus = (props: PropsType) => {
     let [editMode, setMode] = useState(false);
     let [status, setStatus] = useState(`${props.status}`)
     console.log(props.status)
     const activateEditMode = (): void => {
-        setMode(true)
+        if (!props.isOwner) {
+            setMode(true)
+        }
     }
     const disableEditMode = (): void => {
-        setMode(false)
+        if (!props.isOwner) {
+            setMode(false)
+        }
         props.updateStatus(status)
     }
     const onStatusChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -32,9 +37,13 @@ const ProfileStatus = (props: PropsType) => {
                     <span>Status:</span>
                     "<span onDoubleClick={activateEditMode}><Typography
                     variant='button'>{props.status || '----'}</Typography></span>"
-                    <IconButton size='small' color="primary" component="span" onClick={activateEditMode}>
-                        <EditIcon fontSize='small'/>
-                    </IconButton>
+                    {
+                        props.isOwner ?
+                            null :
+                            <IconButton size='small' color="primary" component="span" onClick={activateEditMode}>
+                                <EditIcon fontSize='small'/>
+                            </IconButton>
+                    }
                 </div>
             }
             {editMode &&
