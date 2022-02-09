@@ -121,6 +121,11 @@ const Login = (props: PropsType) => {
     }, [props.isAuth, props.error])
     return (
         <div className={s.login}>
+            <p> Need to register here: <br/>
+                https://social-network.samuraijs.com/
+                <br/>
+                Use your login and password her
+            </p>
             <LoginForm captcha={props.captcha} error={props.error}/>
         </div>
     )

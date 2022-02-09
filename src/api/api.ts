@@ -4,8 +4,8 @@ const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
-        'API-KEY': 'fd9797e2-c763-462e-9359-8ba01d0cfae1'
-        //  'API-KEY':'8f813530-5f30-4753-8d0a-a95ed67652cb'
+         'API-KEY': 'fd9797e2-c763-462e-9359-8ba01d0cfae1'
+        // 'API-KEY':'8f813530-5f30-4753-8d0a-a95ed67652cb'
     }
 })
 export const usersAPI = {
@@ -59,7 +59,6 @@ export const profileAPI = {
         })
     },
     uploadInformation(profile: any) {
-        debugger
         return instance.put('profile', profile)
     }
 }
