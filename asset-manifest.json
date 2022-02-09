@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/social-net/static/css/main.ca49307f.css",
-    "main.js": "/social-net/static/js/main.402d7ca8.js",
+    "main.js": "/social-net/static/js/main.434025bb.js",
     "static/css/692.5c88f8c5.chunk.css": "/social-net/static/css/692.5c88f8c5.chunk.css",
-    "static/js/692.81098ab5.chunk.js": "/social-net/static/js/692.81098ab5.chunk.js",
+    "static/js/692.fadc7211.chunk.js": "/social-net/static/js/692.fadc7211.chunk.js",
     "static/css/3.bd7d0357.chunk.css": "/social-net/static/css/3.bd7d0357.chunk.css",
     "static/js/3.e1ab58e9.chunk.js": "/social-net/static/js/3.e1ab58e9.chunk.js",
     "static/css/195.6be28b5e.chunk.css": "/social-net/static/css/195.6be28b5e.chunk.css",
-    "static/js/195.30ed4a7b.chunk.js": "/social-net/static/js/195.30ed4a7b.chunk.js",
+    "static/js/195.9e807635.chunk.js": "/social-net/static/js/195.9e807635.chunk.js",
     "static/css/413.faa11863.chunk.css": "/social-net/static/css/413.faa11863.chunk.css",
     "static/js/413.dfc8fd4a.chunk.js": "/social-net/static/js/413.dfc8fd4a.chunk.js",
     "static/css/321.4407f162.chunk.css": "/social-net/static/css/321.4407f162.chunk.css",
@@ -26,13 +26,13 @@
     "index.html": "/social-net/index.html",
     "static/media/users.svg": "/social-net/static/media/users.57aaf5106470f532a8e7d863eabd7454.svg",
     "main.ca49307f.css.map": "/social-net/static/css/main.ca49307f.css.map",
-    "main.402d7ca8.js.map": "/social-net/static/js/main.402d7ca8.js.map",
+    "main.434025bb.js.map": "/social-net/static/js/main.434025bb.js.map",
     "692.5c88f8c5.chunk.css.map": "/social-net/static/css/692.5c88f8c5.chunk.css.map",
-    "692.81098ab5.chunk.js.map": "/social-net/static/js/692.81098ab5.chunk.js.map",
+    "692.fadc7211.chunk.js.map": "/social-net/static/js/692.fadc7211.chunk.js.map",
     "3.bd7d0357.chunk.css.map": "/social-net/static/css/3.bd7d0357.chunk.css.map",
     "3.e1ab58e9.chunk.js.map": "/social-net/static/js/3.e1ab58e9.chunk.js.map",
     "195.6be28b5e.chunk.css.map": "/social-net/static/css/195.6be28b5e.chunk.css.map",
-    "195.30ed4a7b.chunk.js.map": "/social-net/static/js/195.30ed4a7b.chunk.js.map",
+    "195.9e807635.chunk.js.map": "/social-net/static/js/195.9e807635.chunk.js.map",
     "413.faa11863.chunk.css.map": "/social-net/static/css/413.faa11863.chunk.css.map",
     "413.dfc8fd4a.chunk.js.map": "/social-net/static/js/413.dfc8fd4a.chunk.js.map",
     "321.4407f162.chunk.css.map": "/social-net/static/css/321.4407f162.chunk.css.map",
@@ -45,6 +45,6 @@
   },
   "entrypoints": [
     "static/css/main.ca49307f.css",
-    "static/js/main.402d7ca8.js"
+    "static/js/main.434025bb.js"
   ]
 }
