@@ -1,14 +1,14 @@
-import React, {useEffect} from "react";
+import React from "react";
 import Header from "./Header";
 import {connect} from "react-redux";
-import {loginUserOut, loginUserThunk, setUserDataAC} from "../../Redux/auth-reducer";
+import {loginUserOut, setUserDataAC} from "../../Redux/auth-reducer";
 import {StoreType} from "../../Redux/reduxStore";
 
 type PropsType = {
-    loginUserOut:()=>void
-    isAuth:boolean
-    login:string|null
-    id:string|null
+    loginUserOut: () => void
+    isAuth: boolean
+    login: string | null
+    id: string | null
 }
 const HeaderContainer = (props: PropsType) => {
     return (

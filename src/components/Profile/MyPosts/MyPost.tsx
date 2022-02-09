@@ -2,12 +2,17 @@ import React from 'react';
 import Post from "./Post/Post";
 import classes from "./MyPost.module.css";
 import {PostsData} from "../../../Redux/profile-reducer";
-import {Formik, Field, Form, ErrorMessage} from 'formik';
-import {postValidator} from "../../../utils/validators/validators";
+import Button from '@material-ui/core/Button';
+import {useFormik} from 'formik';
+import {validationSchemaPost} from "../../../utils/validators/validators";
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 type PropsType = {
     profilePage: PostsData[]
     addPostActionCreator: (s: string) => void
+    profile: any
 }
 type PostType = {
     addPost: (s: string) => void
@@ -21,39 +26,56 @@ const sentData = (values: DataType, addPost: (s: string) => void) => {
         resolve(values)
     })
     sentData.then(prom => {
-        alert('Posted')
         addPost(prom.postText)
     })
 }
 
 const CreatPost = (props: PostType) => {
-    return <div>
-        <Formik
-            initialValues={{
-                postText: '',
-            }}
-            validate={values => (postValidator(values,10))}
-            onSubmit={(values, {resetForm}) => {
-                sentData(values, props.addPost)
-                resetForm();
-            }
-            }
-
-        >
-            <Form>
-                <Field id="postText" name="postText" placeholder="Type your post message..."/>
-                <ErrorMessage name="postText" component="div"/>
-                <button type="submit">Submit</button>
-            </Form>
-        </Formik>
-    </div>;
+    const formik = useFormik({
+        initialValues: {
+            postText: ''
+        },
+        validationSchema: validationSchemaPost,
+        onSubmit: (values, {resetForm}) => {
+            sentData(values, props.addPost)
+            resetForm();
+        }
+    });
+    return (<div>
+        <form onSubmit={formik.handleSubmit} className={classes.manage}>
+            <div>
+                <TextField
+                    id="postText"
+                    name="postText"
+                    label="Post Text"
+                    value={formik.values.postText}
+                    onChange={formik.handleChange}
+                    error={formik.touched.postText && Boolean(formik.errors.postText)}
+                    helperText={formik.touched.postText && formik.errors.postText}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <AccountCircleIcon/>
+                            </InputAdornment>
+                        ),
+                    }}
+                    variant="standard"
+                />
+            </div>
+            <div>
+                <Button color="primary" size='small' variant="contained" type="submit">
+                    Submit
+                </Button>
+            </div>
+        </form>
+    </div>)
 }
 
 const MyPost = (props: PropsType) => {
-    let postsElements = props.profilePage.map(
-        post => <Post key={post.id} message={post.message} likesCount={post.likesCount} id={post.id}/>
+    const postsElements = props.profilePage.map(
+        post => <Post profile={props.profile} key={post.id} message={post.message} likesCount={post.likesCount}
+                      id={post.id}/>
     )
-    console.log('Render')
     return (
         <div className={classes.postBlock}>
             <h3>My posts</h3>

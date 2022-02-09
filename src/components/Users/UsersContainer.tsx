@@ -6,19 +6,20 @@ import {
     setCurrentPage,
     setPages,
     setUsers,
-    toggleIsFetching, toggleIsFollowing, unFollow,
+    toggleIsFetching,
+    toggleIsFollowing,
+    unFollow,
     UserType
 } from "../../Redux/users-reducer";
 import {StoreType} from "../../Redux/reduxStore";
 import Users from "./Users";
-import Preloader from "../common/preloader";
 import {
     currentPage,
     followingInProgress,
     isFetching,
     pageSize,
     totalUsersCount,
-    users, usersReselect
+    usersReselect
 } from "../../Redux/users-selectors";
 
 type PropsType = {
@@ -55,8 +56,8 @@ class UsersContainer extends React.Component<PropsType> {
             pagesNumbers.push(i)
         }
         return <>
-            {this.props.isFetching ? <Preloader/> : null}
-            <Users totalUsersCount={this.props.totalUsersCount} pageSize={this.props.pageSize}
+            <Users isFetching={this.props.isFetching} totalUsersCount={this.props.totalUsersCount}
+                   pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage} unFollow={this.props.unFollow} follow={this.props.follow}
                    onPageChanged={this.onPageChanged}
                    users={this.props.users}

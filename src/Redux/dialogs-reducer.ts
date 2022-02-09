@@ -1,4 +1,4 @@
-import {ActionTypes} from "./store";
+import {ActionTypes} from "./storeType";
 
 const ADD_MESSAGE = 'dialog/ADD-MESSAGE'
 const CHANGE_NEW_TEXT_MESSAGE = 'dialog/CHANGE-NEW-TEXT-MESSAGE'
@@ -52,7 +52,7 @@ let initialState: MessagesPageType = {
     ],
 }
 const DialogsReducer = (state: MessagesPageType = initialState, action: ActionTypes): MessagesPageType => {
-     switch (action.type) {
+    switch (action.type) {
         case ADD_MESSAGE: {
             const newMessage: MessageType = {
                 id: new Date().getTime(),
@@ -60,7 +60,7 @@ const DialogsReducer = (state: MessagesPageType = initialState, action: ActionTy
             }
             return {
                 ...state,
-                messagesData:[...state.messagesData,newMessage]
+                messagesData: [...state.messagesData, newMessage]
             }
         }
         default:
@@ -68,7 +68,7 @@ const DialogsReducer = (state: MessagesPageType = initialState, action: ActionTy
 
     }
 }
-export const addMessageActionCreator = (text:string) => {
+export const addMessageActionCreator = (text: string) => {
     return {
         type: ADD_MESSAGE,
         text

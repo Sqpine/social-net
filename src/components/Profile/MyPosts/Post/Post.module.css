@@ -1,5 +1,29 @@
-.item img{
+.item img {
     width: 50px;
     height: 50px;
-    border-radius: 20px;
+    border-radius: 50%;
+}
+
+.item {
+    background: #EDF2F6;
+    margin: 10px 0 10px 0;
+    border-radius: 10px;
+    padding: 10px;
+    animation: visibility 1s;
+
+}
+
+@keyframes visibility {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.postInfo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }

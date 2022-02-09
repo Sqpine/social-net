@@ -1,0 +1,17 @@
+.formStyle{
+    margin: 10px;
+}
+.button{
+    margin: 10px 0 20px 0;
+}
+.animation{
+    animation: visibility 1s ;
+}
+@keyframes visibility {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}

@@ -1,4 +1,4 @@
-import {ActionTypes} from "./store";
+import {ActionTypes} from "./storeType";
 import {usersAPI} from "../api/api";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {mapingUsers} from "../utils/object-helpers";
@@ -48,13 +48,13 @@ const usersReducer = (state: UsersType = initialState, action: ActionTypes): Use
         case FOLLOW: {
             return {
                 ...state,
-                users: mapingUsers(state.users,action.userId,{followed: true})
+                users: mapingUsers(state.users, action.userId, {followed: true})
             }
         }
         case UNFOLLOW: {
             return {
                 ...state,
-                users: mapingUsers(state.users,action.userId,{followed: false})
+                users: mapingUsers(state.users, action.userId, {followed: false})
             }
         }
         case SET_USERS: {
@@ -149,9 +149,9 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number): Thu
         dispatch(setPages(data.totalCount))
     }
 }
-const followUnFollow = (dispatch: ThunkDispatch<UsersType, any, ActionTypes>,userId:number,data:dataResult,action:typeof followAccept|typeof unFollowAccept)=>{
+const followUnFollow = (dispatch: ThunkDispatch<UsersType, any, ActionTypes>, userId: number, data: dataResult, action: typeof followAccept | typeof unFollowAccept) => {
     dispatch(toggleIsFollowing(true, userId))
-    if(data.resultCode===0){
+    if (data.resultCode === 0) {
         dispatch(action(userId))
         dispatch(toggleIsFollowing(false, userId))
     }
@@ -160,13 +160,13 @@ const followUnFollow = (dispatch: ThunkDispatch<UsersType, any, ActionTypes>,use
 export const unFollow = (userId: number): ThunkAction<Promise<void>, UsersType, any, ActionTypes> => {
     return async (dispatch) => {
         let data = await usersAPI.unFollowUsers(userId)
-        followUnFollow(dispatch,userId,data,unFollowAccept)
+        followUnFollow(dispatch, userId, data, unFollowAccept)
     }
 }
 export const follow = (userId: number): ThunkAction<Promise<void>, UsersType, any, ActionTypes> => {
     return async (dispatch) => {
         let data = await usersAPI.followUsers(userId)
-        followUnFollow(dispatch,userId,data,followAccept)
+        followUnFollow(dispatch, userId, data, followAccept)
     }
 }
 export default usersReducer

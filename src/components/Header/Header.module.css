@@ -1,15 +1,45 @@
-.logo{
+.logo {
     margin-left: 10px;
     width: 150px;
 }
-.header{
+
+.header {
+    padding: 0 10px 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     grid-area: h;
-    background: #C18FE9;
     border-radius: 11px;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
-.loginBlock{
+
+.header h5 {
+    color: black;
+    margin: 0;
+}
+
+.animation {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    animation: visibility 1s;
+
+}
+
+@keyframes visibility {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.loginBlock {
     float: right;
 }
-.loginBlock{
+
+.loginBlock {
     color: white;
 }

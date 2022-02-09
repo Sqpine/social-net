@@ -6,7 +6,7 @@ export type SideData = {
 export type SideDataType = {
     sideData: SideData[]
 }
-let initialState:SideDataType = {
+let initialState: SideDataType = {
     sideData: [
         {
             id: 1,
@@ -21,7 +21,7 @@ let initialState:SideDataType = {
         }
     ]
 }
-const sidebarReducer= (state:SideDataType=initialState,action:any):SideDataType =>{
+const sidebarReducer = (state: SideDataType = initialState, action: any): SideDataType => {
     return state
 }
 export default sidebarReducer

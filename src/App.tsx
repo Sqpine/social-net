@@ -1,29 +1,25 @@
 import './App.css';
-import React, {useEffect, Suspense} from 'react';
+import React, {Suspense, useEffect} from 'react';
 import Navbar from './components/Navbar/Navbar';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {HashRouter, Route, Routes} from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {connect, Provider} from "react-redux";
 import {initializeApp} from "./Redux/app-reducer";
 import store, {StoreType} from "./Redux/reduxStore";
 import Preloader from "./components/common/preloader";
-import s from './s.module.css'
-import {Suspens} from "./HOC/suspens";
 
 const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
+const InProcess = React.lazy(() => import('./components/InProcess/InProcess'));
 const Login = React.lazy(() => import("./components/Login/Login"));
-// import DialogsContainer from "./components/Dialogs/DialogsContainer";
-//import UsersContainer from "./components/Users/UsersContainer";
-// import ProfileContainer from "./components/Profile/ProfileContainer";
-// import Login from "./components/Login/Login";
+
 const App = (props: any) => {
     useEffect(() => {
         props.loginUser()
     }, [])
     if (!props.initialized) {
-        return <div className={s.preloader}>
+        return <div>
             <Preloader/>
         </div>
     } else return (
@@ -37,15 +33,15 @@ const App = (props: any) => {
                             <DialogsContainer/>
                         </Suspense>
                     }/>
-                    <Route path="profile" element={
+                    <Route path="/profile" element={
                         <Suspense fallback={<Preloader/>}>
                             <ProfileContainer/>
                         </Suspense>
                     }>
                         <Route path=":userId" element={
                             <Suspense fallback={<Preloader/>}>
-                            <ProfileContainer/>
-                        </Suspense>
+                                <ProfileContainer/>
+                            </Suspense>
                         }/>
                     </Route>
                     <Route path='/users/*' element={
@@ -57,7 +53,14 @@ const App = (props: any) => {
                         <Suspense fallback={<Preloader/>}>
                             <Login/>
                         </Suspense>
-                        }/>
+                    }/>
+                    <Route path="*" element={<Suspense fallback={<Preloader/>}>
+                        <ProfileContainer/>
+                    </Suspense>}/>
+                    <Route path='/process' element={
+                        <Suspense fallback={<Preloader/>}>
+                            <InProcess/>
+                        </Suspense>}/>
                 </Routes>
             </div>
         </div>
@@ -74,11 +77,11 @@ let AppWithRouter = connect(mapStateToProps, {
 })(App);
 const MainApp = () => {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Provider store={store}>
                 <AppWithRouter/>
             </Provider>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 export default MainApp

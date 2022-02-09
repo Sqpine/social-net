@@ -1,22 +1,76 @@
-.dialogs{
+.dialogs {
+    padding: 30px;
     display: grid;
     grid-template-columns: 2fr 10fr;
 }
-.dialogsItems .active{
+
+.dialogsItems .active {
     color: white;
 }
-.avatar{
+
+.dialog {
+    margin: 10px 0 10px 0;
+}
+
+.avatar {
     width: 50px;
     height: 50px;
     border-radius: 50px;
 }
-.dialogsItems .dialog{
 
-}
-.messages{
-
-}
-.messages .message{
-
+.dialogItem {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
+a {
+    color: black;
+    text-decoration: none;
+}
+
+.dialogItem h5 {
+    text-decoration: none;
+    margin: 0;
+}
+
+.messagesBlock {
+    height: 300px;
+    position: relative;
+}
+
+.messages {
+    max-height: 100%;
+    overflow: auto;
+}
+
+.manage {
+    display: flex;
+    gap: 20px;
+}
+
+.manage div:nth-child(2n) {
+    margin-top: 10px;
+}
+
+.message {
+    background: #EDF2F6;
+    margin: 10px 0 10px 0;
+    border-radius: 5px;
+    padding: 5px;
+    animation: visibility 1s;
+    /*<div id="div1" style="height: 500px;position:relative;">*/
+    /*<div id="div2" style="max-height:100%;overflow:auto;border:1px solid red;">*/
+    /*<div id="div3" style="height:1500px;border:5px solid yellow;">hello</div>*/
+    /*</div>*/
+    /*</div>*/
+}
+
+@keyframes visibility {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

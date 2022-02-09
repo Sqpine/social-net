@@ -1,8 +1,45 @@
-.loginForm{
-    width: 30%;
-    margin: 0 auto;
-    background-color: blueviolet;
+.loginForm {
+    width: 35%;
+    background-color: #EDF2F6;
     border: 2px solid;
-    padding: 10px;
     border-radius: 10px;
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.field {
+    margin-top: 10px;
+}
+
+.animation {
+    animation: visibility 1s;
+}
+
+.warning {
+    color: #f13737;
+    animation: visibility 1s;
+
+}
+
+@keyframes visibility {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.captcha {
+    width: 200px;
+    height: auto;
+}
+
+.button {
+    float: right;
 }

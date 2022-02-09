@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from "react";
+import {Typography} from '@mui/material';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from "@material-ui/core/IconButton";
 
 type PropsType = {
     updateStatus: (s: string) => void
-    status:string
+    status: string
 }
 const ProfileStatus = (props: PropsType) => {
     let [editMode, setMode] = useState(false);
@@ -26,12 +29,24 @@ const ProfileStatus = (props: PropsType) => {
         <>
             {!editMode &&
                 <div>
-                    <span onDoubleClick={activateEditMode}>{props.status || '----'}</span>
+                    <span>Status:</span>
+                    "<span onDoubleClick={activateEditMode}><Typography
+                    variant='button'>{props.status || '----'}</Typography></span>"
+                    <IconButton size='small' color="primary" component="span" onClick={activateEditMode}>
+                        <EditIcon fontSize='small'/>
+                    </IconButton>
                 </div>
             }
             {editMode &&
                 <div>
-                    <input onChange={onStatusChange} autoFocus={true} onBlur={disableEditMode} value={status}/>
+                    <span>Status:</span>
+                    <input onChange={onStatusChange} autoFocus={true} id="icon-button-photo" onBlur={disableEditMode}
+                           value={status}/>
+                    <label htmlFor="icon-button-photo">
+                        <IconButton size='small' color="primary" component="span" onClick={disableEditMode}>
+                            <EditIcon fontSize='small'/>
+                        </IconButton>
+                    </label>
                 </div>
             }
         </>

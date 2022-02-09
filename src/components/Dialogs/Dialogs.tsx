@@ -2,9 +2,13 @@ import React from 'react';
 import classes from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from './Message/Message';
-import {MessagesPageType} from "../../Redux/store";
-import {ErrorMessage, Field, Form, Formik} from 'formik';
-import {messageValidator} from "../../utils/validators/validators";
+import {MessagesPageType} from "../../Redux/storeType";
+import {useFormik} from 'formik';
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import Button from "@material-ui/core/Button";
+import {validationSchemaDialog} from "../../utils/validators/validators";
 
 type PropsType = {
     messagesPage: MessagesPageType
@@ -23,33 +27,50 @@ const sentData = (values: DataType, addText: (s: string) => void) => {
         resolve(values)
     })
     sentData.then(prom => {
-        alert('Sent')
-        console.log(prom.messageText)
         addText(prom.messageText)
     })
 }
 
 const CreatPost = (props: PostType) => {
-    return <div>
-        <Formik
-            initialValues={{
-                messageText: '',
-            }}
-            validate={values => (messageValidator(values,10))}
-            onSubmit={(values, {resetForm}) => {
-                sentData(values, props.addText);
-                resetForm();
-                console.log(values);
-            }
-            }
-        >
-            <Form>
-                <Field id="messageText" name="messageText" placeholder="Type your message..."/>
-                <button type="submit">Submit</button>
-                <ErrorMessage name="messageText" component="div"/>
-            </Form>
-        </Formik>
-    </div>;
+    const formik = useFormik({
+        initialValues: {
+            messageText: ''
+        },
+        validationSchema: validationSchemaDialog,
+        onSubmit: (values, {resetForm}) => {
+            sentData(values, props.addText)
+            resetForm()
+        }
+    })
+
+    return (<div>
+        <form onSubmit={formik.handleSubmit} className={classes.manage}>
+            <div>
+                <TextField
+                    id="messageText"
+                    name="messageText"
+                    value={formik.values.messageText}
+                    onChange={formik.handleChange}
+                    error={formik.touched.messageText && Boolean(formik.errors.messageText)}
+                    helperText={formik.touched.messageText && formik.errors.messageText}
+                    label="Message Text"
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <MailOutlineIcon/>
+                            </InputAdornment>
+                        ),
+                    }}
+                    variant="standard"
+                />
+            </div>
+            <div>
+                <Button color="primary" size='small' variant="contained" type="submit">
+                    Submit
+                </Button>
+            </div>
+        </form>
+    </div>)
 }
 const Dialogs = (props: PropsType) => {
     let dialogsElements = props.messagesPage.dialogsData.map(
@@ -64,11 +85,15 @@ const Dialogs = (props: PropsType) => {
             <div className={classes.dialogsItems}>
                 {dialogsElements}
             </div>
-            <div className={classes.messages}>
-                {messagesElements}
-            </div>
             <div>
-                <CreatPost addText={props.addText}/>
+                <div className={classes.messagesBlock}>
+                    <div className={classes.messages}>
+                        {messagesElements}
+                    </div>
+                </div>
+                <div>
+                    <CreatPost addText={props.addText}/>
+                </div>
             </div>
         </div>
     );

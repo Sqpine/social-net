@@ -1,21 +1,41 @@
-.usersPhoto{
+.usersPhoto {
     width: 100px;
     height: 100px;
 }
-.active{
+
+.active {
     font-weight: bold;
 }
-.center{
+
+.center, .loader {
     display: flex;
     justify-content: center;
-    margin-top: 30px;
+    align-items: center;
+}
 
+.loader {
+    height: 300px;
 }
-.users{
+
+.followUnfollow {
+    margin: 10px 0 0 0;
+}
+
+.usersProfiles {
     display: flex;
-    justify-content: space-evenly;
     flex-wrap: wrap;
+    gap: 50px;
+    margin: 50px 0 0 0;
+    justify-content: center;
 }
-.usersPage{
-    padding: 30px;
+
+.usersPage {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    margin: 50px 0 0 0;
+}
+
+.users {
+    padding: 0 0 20px 0;
 }

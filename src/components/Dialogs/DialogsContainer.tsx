@@ -20,7 +20,7 @@ type PropsType = {
 const DialogsContainer = (props: PropsType) => {
     const navigate = useNavigate();
     useEffect(() => {
-        navigate(`${UsHoc(props.isAuth,'/dialogs')}`)
+        navigate(`${UsHoc(props.isAuth, '/dialogs')}`)
     }, [])
     return (
         <Dialogs {...props}

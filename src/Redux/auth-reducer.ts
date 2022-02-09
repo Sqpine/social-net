@@ -1,25 +1,28 @@
-import {ActionTypes} from "./store";
-import {headerAPI, loginAPI} from "../api/api";
+import {ActionTypes} from "./storeType";
+import {headerAPI, loginAPI, securityAPI} from "../api/api";
 import {ThunkAction} from "redux-thunk";
+import {StoreType} from "./reduxStore";
 
 const SET_LOGIN_ERROR = 'auth/SET_LOGIN_ERROR'
 const SET_USER_DATA = 'auth/SET_USER_DATA'
 
-type initialState = {
+export type initialStateType = {
+    captcha: string
     id: null | string
     email: null | string
     login: null | string
     isAuth: boolean
     error: string | undefined
 }
-let initialState: initialState = {
+let initialState: initialStateType = {
+    captcha: '',
     id: null,
     email: null,
     login: null,
     isAuth: false,
     error: undefined
 }
-const AuthReducer = (state: initialState = initialState, action: ActionTypes): initialState => {
+const AuthReducer = (state: initialStateType = initialState, action: ActionTypes): initialStateType => {
     switch (action.type) {
 
         case SET_USER_DATA: {
@@ -32,6 +35,7 @@ const AuthReducer = (state: initialState = initialState, action: ActionTypes): i
             return {
                 ...state,
                 error: action.error,
+                captcha: action.captcha
             }
         }
         default:
@@ -39,10 +43,11 @@ const AuthReducer = (state: initialState = initialState, action: ActionTypes): i
 
     }
 }
-export const loginError = (error: string | undefined) => {
+export const loginError = (error: string | undefined, captcha: string = '') => {
     return {
         type: SET_LOGIN_ERROR,
-        error: error
+        error: error,
+        captcha: captcha,
     } as const
 }
 export const setUserDataAC = (id: string | null, email: string | null, login: string | null, isAuth: boolean) => {
@@ -53,7 +58,7 @@ export const setUserDataAC = (id: string | null, email: string | null, login: st
         }
     } as const
 }
-export const loginUserThunk = (): ThunkAction<Promise<void>, initialState, any, ActionTypes> => {
+export const loginUserThunk = (): ThunkAction<Promise<void>, StoreType, any, ActionTypes> => {
     return async (dispatch) => {
         let response = await headerAPI.loginUser()
         if (response.data.resultCode === 0) {
@@ -62,27 +67,37 @@ export const loginUserThunk = (): ThunkAction<Promise<void>, initialState, any, 
         }
     }
 }
-///
-export const loginUser = (login: string, password: string, rememberMe: boolean): ThunkAction<Promise<void>, initialState, any, ActionTypes> => {
+export const getCaptcha = (error: string | undefined): ThunkAction<Promise<void>, StoreType, any, ActionTypes> => {
     return async (dispatch) => {
-        let response = await loginAPI.loginUserIn(login, password, rememberMe)
+        let response = await securityAPI.getCaptcha()
+        if (response.status === 200) {
+            dispatch(loginError(error, response.data.url))
+        }
+    }
+}
+///
+export const loginUser = (login: string, password: string, rememberMe: boolean, captcha: string = ''): ThunkAction<Promise<void>, StoreType, any, ActionTypes> => {
+    return async (dispatch, getState) => {
+        const error = getState().auth.error
+        const captchaStore = getState().auth.captcha
+        const response = await loginAPI.loginUserIn(login, password, rememberMe, captcha)
         if (response.data.resultCode === 0) {
             await dispatch(loginUserThunk())
-            alert('Sign in successful!')
-            if (initialState.error !== undefined) {
+            if (!error || captchaStore) {
                 dispatch(loginError(undefined))
             }
         } else {
             let [error] = response.data.messages
-            dispatch(loginError(error))
+            if (response.data.resultCode === 10) {
+                await dispatch(getCaptcha(error))
+            } else dispatch(loginError(error))
         }
     }
 }
-export const loginUserOut = (): ThunkAction<Promise<void>, initialState, any, ActionTypes> => {
+export const loginUserOut = (): ThunkAction<Promise<void>, initialStateType, any, ActionTypes> => {
     return async (dispatch) => {
         let response = await loginAPI.loginUserOut()
         if (response.data.resultCode === 0) {
-            alert('Sign out successful!')
             dispatch(setUserDataAC(null, null, null, false))
         }
     }

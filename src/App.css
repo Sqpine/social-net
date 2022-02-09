@@ -1,17 +1,21 @@
-.app-wrapper{
-  margin: 0 auto;
-  display: grid;
-  width: 1200px;
-  grid-template-areas:
+.app-wrapper {
+    margin: 0 auto;
+    display: grid;
+    padding: 0 100px 100px;
+    width: auto;
+    grid-template-areas:
             "h h"
             "n c";
-  grid-template-rows: 60px 1fr;
-  grid-template-columns: 2fr 10fr;
-  grid-gap: 10px;
+    grid-template-rows: 60px 1fr;
+    grid-template-columns: 2fr 10fr;
+    grid-gap: 40px;
+    background: #EDF2F6;
 }
-.app-wrapper-content{
-  grid-area: c;
-  background: rgba(193, 143, 233, 0.5);
-  border-radius: 31px;
-  height: auto;
+
+.app-wrapper-content {
+    grid-area: c;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 31px;
+    height: auto;
 }

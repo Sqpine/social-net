@@ -1,6 +1,16 @@
-.postBlock{
-    padding: 10px;
+.postBlock {
+    padding: 20px;
 }
-.posts{
+
+.posts {
     margin-top: 30px;
+}
+
+.manage {
+    display: flex;
+    gap: 20px;
+}
+
+.manage div:nth-child(2n) {
+    margin-top: 10px;
 }

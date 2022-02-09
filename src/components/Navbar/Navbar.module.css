@@ -1,29 +1,60 @@
-.nav{
+.nav {
     grid-area: n;
-    background: rgba(193, 143, 233, 0.5);
     border-radius: 18px;
 }
-.item{
-    padding: 10px 10px 0 10px;
+
+.nav a {
     color: black;
     text-decoration: none;
 }
-.item a{
-    text-decoration: none;
+
+.item {
+    margin: 0 0 10px 0;
+    padding: 10px;
 }
-.activeLink{
-    padding: 10px 10px 0 10px;
-    color: white;
-    text-decoration: underline;
+
+.item span {
+    color: black;
+    padding: 0 0 0 10px;
 }
-.flex{
+
+.item img {
+    width: 20px;
+    height: 20px;
+}
+
+.unActive > div {
+    transition: all ease-in-out 0.3s;
+    border-bottom: 1px transparent solid;
+    opacity: 0.7;
+}
+
+.activeLink > div, .unActive > div:hover {
+    transition: all ease-in-out 0.3s;
+    opacity: 1;
+    border-bottom: 1px black solid;
+    background: white;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.itemFriends {
+    padding: 10px 0 10px 0;
+    margin: 0 0 10px 0;
+    background: white;
+    border-radius: 5px;
+    gap: 10px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+.flex, .itemFriends {
     display: flex;
-    justify-content: space-evenly;
+    align-items: center;
 }
-.itemFriends{
-    margin-top: 40px;
-    margin-bottom: 40px;
-}
-.itemFriends a{
-    text-decoration: none;
+
+.flex {
+    gap: 10px;
 }

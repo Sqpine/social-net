@@ -1,12 +1,12 @@
-import {ActionTypes} from "./store";
+import {ActionTypes} from "./storeType";
 import {loginUserThunk} from "./auth-reducer";
 
 const SET_INITIALIZING_SUCCSESS = 'app/SET_INITIALIZING_SUCCSESS'
 type initialState = {
-    initialized:boolean
+    initialized: boolean
 }
 let initialState: initialState = {
-    initialized:false,
+    initialized: false,
 }
 const AppReducer = (state: initialState = initialState, action: ActionTypes): initialState => {
     switch (action.type) {
@@ -14,7 +14,7 @@ const AppReducer = (state: initialState = initialState, action: ActionTypes): in
         case SET_INITIALIZING_SUCCSESS: {
             return {
                 ...state,
-                initialized:true
+                initialized: true
             }
         }
         default:
@@ -27,9 +27,9 @@ export const initializedSuccsess = () => {
         type: SET_INITIALIZING_SUCCSESS,
     } as const
 }
-export const initializeApp=()=> async (dispatch:any)=>{
+export const initializeApp = () => async (dispatch: any) => {
     let promise = dispatch(loginUserThunk())
-    Promise.all([promise]).then(()=>{
+    Promise.all([promise]).then(() => {
         dispatch(initializedSuccsess())
     })
 }
