@@ -9,13 +9,12 @@
     grid-template-rows: 60px 1fr;
     grid-template-columns: 2fr 10fr;
     grid-gap: 40px;
-    background: #EDF2F6;
 }
 
 .app-wrapper-content {
     grid-area: c;
     background: white;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
     border-radius: 31px;
     height: auto;
 }
