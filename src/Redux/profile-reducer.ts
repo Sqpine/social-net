@@ -1,7 +1,7 @@
-import {ActionTypes} from "./storeType";
-import {ThunkAction} from "redux-thunk";
-import {profileAPI} from "../api/api";
-import {StoreType} from "./reduxStore";
+import {InferActionsTypes} from "./storeType";
+import {ThunkBaseType} from "./reduxStore";
+import {profileAPI, ProfileType} from "../api/profile-api";
+import {UsersPhotoType} from "../api/users-api";
 
 const ADD_POST = 'ADD-POST'
 const ADD_ERROR = 'ADD_ERROR'
@@ -21,7 +21,7 @@ export type PostsData = {
 export type ProfilePageType = {
     postsData: PostsData[]
     status: string
-    profile: object | null
+    profile: ProfileType | null
     error: string
 }
 
@@ -34,7 +34,7 @@ let initialState: ProfilePageType = {
     status: '',
     profile: null
 }
-const profileReducer = (state: ProfilePageType = initialState, action: ActionTypes): ProfilePageType => {
+const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsTypes): ProfilePageType => {
     switch (action.type) {
         case ADD_POST: {
             const newPost: PostsData = {
@@ -56,7 +56,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
         case SET_PHOTO_PROFILE: {
             return {
                 ...state,
-                profile: {...state.profile, photos: action.photo}
+                profile: state.profile ? {...state.profile, photos: action.photo} : null
             }
         }
         case SET_USER_PROFILE: {
@@ -75,76 +75,83 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
             return state
     }
 }
-export const addPostActionCreator = (text: string) => {
-    return {
-        type: ADD_POST,
-        text
-    } as const
+export const ProfileAction = {
+    addPostActionCreator: (text: string) => {
+        return {
+            type: ADD_POST,
+            text
+        } as const
+    },
+    addError: (error: string) => {
+        return {
+            type: ADD_ERROR,
+            error
+        } as const
+    },
+    setUserProfile: (profile: ProfileType) => {
+        return {
+            type: SET_USER_PROFILE,
+            profile
+        } as const
+    },
+    setUserStatus: (status: string) => {
+        return {
+            type: SET_STATUS_PROFILE,
+            status
+        } as const
+    },
+    setPhotoSuccsesful: (photo: UsersPhotoType) => {
+        return {
+            type: SET_PHOTO_PROFILE,
+            photo
+        } as const
+    }
 }
-export const addError = (error: string) => {
-    return {
-        type: ADD_ERROR,
-        error
-    } as const
-}
-export const setUserProfile = (profile: object) => {
-    return {
-        type: SET_USER_PROFILE,
-        profile
-    } as const
-}
-export const setUserStatus = (status: string) => {
-    return {
-        type: SET_STATUS_PROFILE,
-        status
-    } as const
-}
-export const setPhotoSuccsesful = (photo: object) => {
-    return {
-        type: SET_PHOTO_PROFILE,
-        photo
-    } as const
-}
-export const profileThunk = (id: string | undefined | null, ownId: string | null): ThunkAction<Promise<void>, StoreType, any, ActionTypes> => {
+export type ProfileActionsTypes = InferActionsTypes<typeof ProfileAction>
+type ThunkType = ThunkBaseType<ProfileActionsTypes>
+
+export const profileThunk = (id: string | undefined | null, ownId: string | null): ThunkType => {
     return async (dispatch) => {
         const userIdToUse = id ? id : ownId
         let response = await profileAPI.contentProfile(userIdToUse)
-        dispatch(setUserProfile(response.data))
+        debugger
+        dispatch(ProfileAction.setUserProfile(response))
 
     }
 }
-export const getStatus = (id: string | undefined, ownId: string | null): ThunkAction<Promise<void>, ProfilePageType, any, ActionTypes> => {
+export const getStatus = (id: string | undefined, ownId: string | null): ThunkType => {
     return async (dispatch) => {
         const userIdToUse = id ? id : ownId
         let response = await profileAPI.getStatus(userIdToUse)
-        dispatch(setUserStatus(response.data))
+        dispatch(ProfileAction.setUserStatus(response))
     }
 }
-export const updateStatus = (status: string): ThunkAction<Promise<void>, ProfilePageType, any, ActionTypes> => {
+export const updateStatus = (status: string): ThunkType => {
     return async (dispatch) => {
         let response = await profileAPI.UpdateStatus(status)
         if (response.data.resultCode === 0) {
-            dispatch(setUserStatus(status))
+            dispatch(ProfileAction.setUserStatus(status))
         }
     }
 }
-export const uploadPhoto = (file: object): ThunkAction<Promise<void>, ProfilePageType, any, ActionTypes> => {
+export const uploadPhoto = (file: File): ThunkType => {
     return async (dispatch) => {
         let response = await profileAPI.UploadPhoto(file)
-        if (response.data.resultCode === 0) {
-            dispatch(setPhotoSuccsesful(response.data.data.photos))
+        debugger
+        if (response.resultCode === 0) {
+            dispatch(ProfileAction.setPhotoSuccsesful(response.data))
         }
     }
 }
-export const UploadInformation = (file: object): ThunkAction<Promise<any>, StoreType, any, ActionTypes> => {
+export const UploadInformation = (file: object): ThunkBaseType<ProfileActionsTypes, Promise<boolean | undefined>> => {
     return async (dispatch, getState) => {
         const userId = getState().auth.id
         const response = await profileAPI.uploadInformation(file)
         if (response.data.resultCode === 0) {
-            await dispatch(profileThunk(userId, ''))
+            await dispatch(profileThunk(userId, null))
             return true
         }
-        dispatch(addError(response.data.messages[0]))
+        dispatch(ProfileAction.addError(response.data.messages[0]))
     }
 }
 export default profileReducer

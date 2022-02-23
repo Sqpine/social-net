@@ -86,4 +86,5 @@ const MyPost = (props: PropsType) => {
         </div>
     );
 }
-export default MyPost;
+const MyPostMemorized = React.memo(MyPost)
+export default MyPostMemorized;

@@ -1,6 +1,9 @@
 {
   "name": "02-second-project",
   "version": "0.1.0",
+  "jest": {
+    "verbose": true
+  },
   "private": true,
   "homepage": "https://sqpine.github.io/social-net",
   "dependencies": {
@@ -16,7 +19,8 @@
     "axios": "^0.24.0",
     "babel-jest": "^27.4.6",
     "formik": "^2.2.9",
-    "jest": "^27.4.7",
+    "jest": "^27.5.1",
+    "jest-junit": "^13.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",

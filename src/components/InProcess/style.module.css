@@ -1,0 +1,12 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 50px 0 100px 0;
+}
+
+.robot {
+    width: 300px;
+    height: auto;
+}

@@ -1,7 +1,9 @@
-import {ActionTypes} from "./storeType";
-import {headerAPI, loginAPI, securityAPI} from "../api/api";
-import {ThunkAction} from "redux-thunk";
-import {StoreType} from "./reduxStore";
+import {InferActionsTypes} from "./storeType";
+import {ResultCodeCaptcha, ResultCodeEnum} from "../api/api";
+import {ThunkBaseType} from "./reduxStore";
+import {loginAPI} from "../api/login-api";
+import {securityAPI} from "../api/security-api";
+import {headerAPI} from "../api/header-api";
 
 const SET_LOGIN_ERROR = 'auth/SET_LOGIN_ERROR'
 const SET_USER_DATA = 'auth/SET_USER_DATA'
@@ -22,7 +24,7 @@ let initialState: initialStateType = {
     isAuth: false,
     error: undefined
 }
-const AuthReducer = (state: initialStateType = initialState, action: ActionTypes): initialStateType => {
+const AuthReducer = (state: initialStateType = initialState, action: AuthActionsTypes): initialStateType => {
     switch (action.type) {
 
         case SET_USER_DATA: {
@@ -43,62 +45,70 @@ const AuthReducer = (state: initialStateType = initialState, action: ActionTypes
 
     }
 }
-export const loginError = (error: string | undefined, captcha: string = '') => {
-    return {
-        type: SET_LOGIN_ERROR,
-        error: error,
-        captcha: captcha,
-    } as const
+export type AuthActionsTypes = InferActionsTypes<typeof AuthAcions>
+type ThunkType = ThunkBaseType<AuthActionsTypes>
+
+export const AuthAcions = {
+    loginError: (error: string | undefined, captcha: string = '') => {
+        return {
+            type: SET_LOGIN_ERROR,
+            error: error,
+            captcha: captcha,
+        } as const
+    },
+    setUserDataAC: (id: string | null, email: string | null, login: string | null, isAuth: boolean) => {
+        return {
+            type: SET_USER_DATA,
+            data: {
+                id, email, login, isAuth
+            }
+        } as const
+    }
 }
-export const setUserDataAC = (id: string | null, email: string | null, login: string | null, isAuth: boolean) => {
-    return {
-        type: SET_USER_DATA,
-        data: {
-            id, email, login, isAuth
-        }
-    } as const
-}
-export const loginUserThunk = (): ThunkAction<Promise<void>, StoreType, any, ActionTypes> => {
+export const loginUserThunk = (): ThunkType => {
     return async (dispatch) => {
         let response = await headerAPI.loginUser()
-        if (response.data.resultCode === 0) {
+        if (response.data.resultCode === ResultCodeEnum.Success) {
             let {id, login, email} = response.data.data
-            dispatch(setUserDataAC(id, email, login, true))
+            dispatch(AuthAcions.setUserDataAC(id, email, login, true))
         }
     }
 }
-export const getCaptcha = (error: string | undefined): ThunkAction<Promise<void>, StoreType, any, ActionTypes> => {
+export const getCaptcha = (error: string | undefined): ThunkType => {
     return async (dispatch) => {
         let response = await securityAPI.getCaptcha()
+        debugger
         if (response.status === 200) {
-            dispatch(loginError(error, response.data.url))
+            dispatch(AuthAcions.loginError(error, response.data.url))
         }
     }
 }
 ///
-export const loginUser = (login: string, password: string, rememberMe: boolean, captcha: string = ''): ThunkAction<Promise<void>, StoreType, any, ActionTypes> => {
+export const loginUser = (login: string, password: string, rememberMe: boolean, captcha: string = ''): ThunkType => {
     return async (dispatch, getState) => {
         const error = getState().auth.error
         const captchaStore = getState().auth.captcha
         const response = await loginAPI.loginUserIn(login, password, rememberMe, captcha)
-        if (response.data.resultCode === 0) {
+        if (response.data.resultCode === ResultCodeEnum.Success) {
             await dispatch(loginUserThunk())
             if (!error || captchaStore) {
-                dispatch(loginError(undefined))
+                dispatch(AuthAcions.loginError(undefined))
             }
         } else {
             let [error] = response.data.messages
-            if (response.data.resultCode === 10) {
+            if (response.data.resultCode === ResultCodeCaptcha.CaptchaRequired) {
                 await dispatch(getCaptcha(error))
-            } else dispatch(loginError(error))
+            } else dispatch(AuthAcions.loginError(error))
         }
     }
 }
-export const loginUserOut = (): ThunkAction<Promise<void>, initialStateType, any, ActionTypes> => {
+export const loginUserOut = (): ThunkType => {
     return async (dispatch) => {
+
         let response = await loginAPI.loginUserOut()
-        if (response.data.resultCode === 0) {
-            dispatch(setUserDataAC(null, null, null, false))
+
+        if (response.data.resultCode === ResultCodeEnum.Success) {
+            dispatch(AuthAcions.setUserDataAC(null, null, null, false))
         }
     }
 }

@@ -1,11 +1,11 @@
 import React from "react";
 import Header from "./Header";
 import {connect} from "react-redux";
-import {loginUserOut, setUserDataAC} from "../../Redux/auth-reducer";
+import {loginUserOut} from "../../Redux/auth-reducer";
 import {StoreType} from "../../Redux/reduxStore";
 
 type PropsType = {
-    loginUserOut: () => void
+    loginUserOut:()=>void
     isAuth: boolean
     login: string | null
     id: string | null
@@ -21,6 +21,5 @@ const mapStateToProps = (state: StoreType) => ({
     id: state.auth.id,
 })
 export default connect(mapStateToProps, {
-    setUserDataAC,
     loginUserOut: loginUserOut
 })(HeaderContainer)

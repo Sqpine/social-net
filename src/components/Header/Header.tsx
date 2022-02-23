@@ -3,9 +3,11 @@ import classes from "./Header.module.css";
 import logo from '../../images/logo.svg'
 import {NavLink} from "react-router-dom";
 import {Button} from '@mui/material';
+import {AuthActionsTypes} from "../../Redux/auth-reducer";
+import {ThunkBaseType} from "../../Redux/reduxStore";
 
 type PropsType = {
-    loginUserOut: () => void
+    loginUserOut:()=>void
     isAuth: boolean
     login: string | null
     id: string | null

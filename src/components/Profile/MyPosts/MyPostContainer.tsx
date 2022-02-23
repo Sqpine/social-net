@@ -1,6 +1,6 @@
 import React from 'react';
-import MyPost from "./MyPost";
-import {addPostActionCreator} from "../../../Redux/profile-reducer";
+import MyPostMemorized from "./MyPost";
+import {ProfileAction} from "../../../Redux/profile-reducer";
 import {connect} from "react-redux";
 import {StoreType} from "../../../Redux/reduxStore";
 
@@ -12,5 +12,5 @@ let mapStateToProps = (state: StoreType) => {
     }
 }
 
-const MyPostContainer = connect(mapStateToProps, {addPostActionCreator})(MyPost)
+const MyPostContainer = connect(mapStateToProps, {addPostActionCreator: ProfileAction.addPostActionCreator})(MyPostMemorized)
 export default MyPostContainer;

@@ -1,10 +1,10 @@
-import {applyMiddleware, combineReducers, compose, createStore} from "redux";
+import {Action,applyMiddleware, combineReducers, compose, createStore} from "redux";
 import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 import usersReducer from "./users-reducer";
 import AuthReducer from "./auth-reducer";
-import thunkMiddleware from "redux-thunk";
+import thunkMiddleware, {ThunkAction} from "redux-thunk";
 import AppReducer from "./app-reducer";
 
 let reducers = combineReducers({
@@ -20,6 +20,7 @@ declare global {
         __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
     }
 }
+export type ThunkBaseType<A extends Action,PRO=Promise<void>> = ThunkAction<PRO, StoreType, unknown, A>
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 let store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware)))
 export default store

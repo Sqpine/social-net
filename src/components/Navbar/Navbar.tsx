@@ -8,13 +8,16 @@ import settings from '../../images/settings.svg';
 import users from '../../images/users.svg'
 import {NavLink} from "react-router-dom";
 import NavbarFriends from "./Content/NavbarFriends";
-import {SideDataType} from "../../Redux/storeType";
-import store from "../../Redux/reduxStore";
+import {itemsType} from "../../api/users-api";
 
-const Navbar = () => {
-    let navData: SideDataType = store.getState().sideBar
-    let navFriends = navData.sideData.map(nav => <NavbarFriends key={nav.id} avatar={nav.avatar} name={nav.name}
-                                                                id={nav.id}/>)
+type PropsType={
+    navData:itemsType[]
+}
+const Navbar = (props:PropsType) => {
+    const navFriends = props.navData.map(nav => <NavbarFriends key={nav.id} avatar={nav.photos.small} name={nav.name}
+                                                             id={nav.id}/>)
+
+debugger
     return (
         <nav className={classes.nav}>
             <NavLink to="/profile"

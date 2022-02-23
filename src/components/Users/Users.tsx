@@ -14,9 +14,9 @@ export type PropsType = {
     unFollow: (i: number) => void
     followingInProgress: number[]
     onPageChanged: (s: number) => void
-    toggleIsFollowing: (s: boolean, u: number) => void
     isFetching: boolean
 }
+
 const Users = (props: PropsType) => {
     let pages = Math.ceil(props.totalUsersCount / props.pageSize)
     let pagesNumbers = []

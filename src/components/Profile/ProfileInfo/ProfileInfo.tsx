@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import {Button} from '@material-ui/core';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import avatar from '../../../images/avatar.png'
+import {UsersPhotoType} from "../../../api/users-api";
 
 export type ContactType = {
     github: string
@@ -22,18 +23,15 @@ export type ContactType = {
     mainLink: string
 }
 export type ProfileType = {
-    photos: PhotoType
+    photos: UsersPhotoType
     userId: number
     aboutMe: string
     lookingForAJob?: boolean
     lookingForAJobDescription?: string
     fullName: string
-    contacts: { [key: string]: ContactType } & ContactType
+    contacts: { [key: string]: ContactType }
 }
-type PhotoType = {
-    large: string
-    small: string
-}
+
 export type ProfileData = {
     profile: ProfileType | null
 }
@@ -43,8 +41,8 @@ type PropsType = {
     status: string
     updateStatus: (s: string) => void
     isOwner: string | undefined
-    uploadPhoto: (s: object) => void
-    UploadInformation: (file: object) => Promise<undefined>
+    uploadPhoto: (s: File) => void
+    UploadInformation: (file: object) => Promise<boolean | undefined>
 }
 
 const ProfileDataInfo = (props: ProfileData) => {

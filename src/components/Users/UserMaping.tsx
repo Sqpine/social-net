@@ -6,6 +6,8 @@ import {PropsType} from "./Users";
 import {Button} from '@mui/material';
 
 const UserMaping = (props: PropsType) => {
+    let t = props.followingInProgress
+    debugger
     return (
         <div className={s.usersProfiles}>
             {props.users.map(u => <div className={s.users} key={u.id}>

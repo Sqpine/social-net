@@ -3,12 +3,12 @@ import ProfileInfo, {ProfileType} from "./ProfileInfo/ProfileInfo";
 import MyPostContainer from "./MyPosts/MyPostContainer";
 type PropsType = {
     error:string
-    profile:ProfileType
+    profile:ProfileType | null
     status:string
     updateStatus:(s:string)=>void
     isOwner: string | undefined
-    uploadPhoto:(s: object)=>void
-    UploadInformation:(file: object)=>Promise<undefined>
+    uploadPhoto:(s: File)=>void
+    UploadInformation:(file: object)=>Promise<boolean | undefined>
 }
 const Profile = (props:PropsType) => {
     return (

@@ -1,7 +1,6 @@
-import {ActionTypes} from "./storeType";
+import {InferActionsTypes} from "./storeType";
 
 const ADD_MESSAGE = 'dialog/ADD-MESSAGE'
-const CHANGE_NEW_TEXT_MESSAGE = 'dialog/CHANGE-NEW-TEXT-MESSAGE'
 
 export type MessageType = {
     id: number
@@ -51,7 +50,7 @@ let initialState: MessagesPageType = {
         {id: 6, message: 'Yo'}
     ],
 }
-const DialogsReducer = (state: MessagesPageType = initialState, action: ActionTypes): MessagesPageType => {
+const DialogsReducer = (state: MessagesPageType = initialState, action: actionsDialogsType): MessagesPageType => {
     switch (action.type) {
         case ADD_MESSAGE: {
             const newMessage: MessageType = {
@@ -68,11 +67,16 @@ const DialogsReducer = (state: MessagesPageType = initialState, action: ActionTy
 
     }
 }
-export const addMessageActionCreator = (text: string) => {
-    return {
-        type: ADD_MESSAGE,
-        text
-    } as const
+type actionsDialogsType = InferActionsTypes<typeof actionsDialogs>
+
+export const actionsDialogs = {
+    addMessageActionCreator: (text: string) => {
+        return {
+            type: ADD_MESSAGE,
+            text
+        } as const
+    }
 }
+
 
 export default DialogsReducer

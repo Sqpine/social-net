@@ -1,17 +1,3 @@
-import {addError, addPostActionCreator, setPhotoSuccsesful, setUserProfile, setUserStatus} from "./profile-reducer";
-import {addMessageActionCreator,} from "./dialogs-reducer";
-import {
-    followAccept,
-    setCurrentPage,
-    setPages,
-    setUsers,
-    toggleIsFetching,
-    toggleIsFollowing,
-    unFollowAccept
-} from "./users-reducer";
-import {loginError, setUserDataAC} from "./auth-reducer";
-import {initializedSuccsess} from "./app-reducer";
-
 export type MessageType = {
     id: number
     message: string
@@ -28,7 +14,7 @@ export type PostsData = {
 }
 export type SideData = {
     id: number
-    avatar: string
+    avatar: string|null
     name: string
 }
 export type MessagesPageType = {
@@ -48,21 +34,6 @@ export type StateType = {
     profilePage: ProfilePageType
     sideBar: SideDataType
 }
-export type ActionTypes =
-    ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof addMessageActionCreator>
-    | ReturnType<typeof followAccept>
-    | ReturnType<typeof unFollowAccept>
-    | ReturnType<typeof setUsers>
-    | ReturnType<typeof setCurrentPage>
-    | ReturnType<typeof setPages>
-    | ReturnType<typeof toggleIsFetching>
-    | ReturnType<typeof setUserProfile>
-    | ReturnType<typeof setUserStatus>
-    | ReturnType<typeof setUserDataAC>
-    | ReturnType<typeof loginError>
-    | ReturnType<typeof toggleIsFollowing>
-    | ReturnType<typeof initializedSuccsess>
-    | ReturnType<typeof setPhotoSuccsesful>
-    | ReturnType<typeof addError>
+type PropertiesTypes<T> = T extends { [key: string]: (...args: any[]) => infer U } ? U : never
+export type InferActionsTypes<T extends { [key: string]: (...args: any[]) => any }> = ReturnType<PropertiesTypes<T>>
 

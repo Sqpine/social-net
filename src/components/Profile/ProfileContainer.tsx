@@ -3,32 +3,33 @@ import Profile from "./Profile";
 import {connect} from "react-redux";
 import {StoreType} from "../../Redux/reduxStore";
 import {
-    getStatus,
+    getStatus, ProfileAction, ProfileActionsTypes,
     profileThunk,
-    setUserProfile,
     updateStatus,
     UploadInformation,
     uploadPhoto
 } from "../../Redux/profile-reducer";
 import {useNavigate, useParams} from "react-router-dom";
 import {UsHoc} from "./withAuthRedirect";
+import {ProfileType} from "../../api/profile-api";
 
 type PropsType = {
     error: string
-    setUserProfile: (data: object) => void
-    profile: any | object
+    profile: ProfileType | null
     id: string | null
-    profileThunk: (i: string | undefined, s: string | null) => void
-    getStatus: (i: string | undefined, s: string | null) => void
     isAuth: boolean
     status: string
+
+    profileThunk: (i: string| undefined, s: string| null) => void
+    getStatus: (i: string | undefined, s: string  | null) => void
     updateStatus: (s: string) => void
-    uploadPhoto: (s: object) => void
-    UploadInformation: (file: object) => Promise<undefined>
+    uploadPhoto: (s: File) => void
+    UploadInformation: (file: object) => Promise<boolean | undefined>
 }
 const ProfileContainer = (props: PropsType) => {
     const {userId} = useParams();
     const navigate = useNavigate();
+
     useEffect(() => {
         navigate(`${UsHoc(props.isAuth, `/profile/${userId ? userId : ''}`)}`)
         props.profileThunk(userId, props.id)
@@ -47,12 +48,10 @@ let mapStateToProps = (state: StoreType) => (
         id: state.auth.id,
         isAuth: state.auth.isAuth,
         status: state.profilePage.status,
-        login: state.auth.login,
         error: state.profilePage.error
     }
 )
 export default connect(mapStateToProps, {
-    setUserProfile,
     profileThunk,
     getStatus,
     updateStatus,

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import Dialogs from "./Dialogs";
-import {addMessageActionCreator, MessagesPageType,} from "../../Redux/dialogs-reducer";
+import {actionsDialogs, MessagesPageType,} from "../../Redux/dialogs-reducer";
 import {connect} from "react-redux";
 import {StoreType} from "../../Redux/reduxStore";
 import {compose} from "redux";
@@ -34,5 +34,5 @@ let mapStateToProps = (state: StoreType): MapStatePropsType => {
     }
 }
 export default compose(
-    connect(mapStateToProps, {addMessageActionCreator})
+    connect(mapStateToProps, {addMessageActionCreator: actionsDialogs.addMessageActionCreator})
 )(DialogsContainer)

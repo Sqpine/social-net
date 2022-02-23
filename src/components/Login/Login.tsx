@@ -130,7 +130,7 @@ const Login = (props: PropsType) => {
         </div>
     )
 }
-let mapStateToProps = (state: StoreType) => {
+let mapStateToProps = (state: StoreType):PropsType => {
     return ({
         isAuth: state.auth.isAuth,
         error: state.auth.error,
